@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Socrate</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+      overflow: hidden; /* Hide scrollbars */
+      width: 500px;
+      min-width: 500px;
+      border-radius: 12px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    /* Text List Styles */
+    #textList {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .text-entry {
+      position: relative;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #fafafa;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+	  padding-bottom: 20px;
+	  text-align: justify;
+	  padding-right: 20px;
+    }
+
+    .text-entry.grayed-out {
+      background-color: #e0e0e0;
+    }
+
+    .text-entry:hover {
+      background-color: #e0f7fa;
+    }
+
+    .delete-icon {
+      position: absolute;
+      top: 1px;
+      right: 1px; /* Adjusted to prevent overlap with text */
+      width: 16px;
+      height: 16px;
+      fill: #d9534f;
+      cursor: pointer;
+      transition: fill 0.3s ease;
+    }
+
+    .delete-icon:hover {
+      fill: #c9302c;
+    }
+
+    .checklist-icon {
+      position: absolute;
+      bottom: 1px;
+      right: 1px; /* Adjusted to prevent overlap with text */
+      width: 16px;
+      height: 16px;
+      fill: #4CAF50;
+      cursor: pointer;
+      transition: fill 0.3s ease;
+    }
+
+    .checklist-icon:hover {
+      fill: #45a049;
+    }
+
+    .reminder-icons {
+      position: absolute;
+      bottom: 1px;
+      left: 1px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .reminder-icons .icon {
+      font-size: 16px;
+      color: #d3d3d3;
+    }
+
+    .reminder-icons .icon.checked {
+      color: #4CAF50;
+    }
+
+    /* QCM Page Styles */
+    #qcmPage {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      border-radius: 12px; /* Rounded corners */
+      overflow-y: auto;
+      transition: left 0.3s ease;
+    }
+
+    #qcmPage.active {
+      left: 0;
+    }
+
+    .qcm-container {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	      max-width: 91%;
+		padding-bottom: 0px;
+    }
+
+    .qcm-question {
+      word-wrap: break-word; /* Ensure text wraps within the container */
+    }
+
+    .qcm-choices {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .qcm-choices li {
+      margin-bottom: 10px;
+      word-wrap: break-word; /* Ensure text wraps within the container */
+    }
+
+    .qcm-choices input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .qcm-button {
+      width: 100%; /* Ensure button stays within the container */
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+	  max-width: 93%;
+    }
+
+    .qcm-button:hover {
+      background-color: #45a049;
+    }
+
+    #backButton {
+      display: block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #d9534f;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #backButton:hover {
+      background-color: #c9302c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Socrate</h1>
+  <div id="textList"></div>
+
+  <div id="qcmPage">
+    <button id="backButton">Retour</button>
+    <div id="qcmContainer" class="qcm-container">
+      <div id="qcmContent"></div>
+    </div>
+    <button id="verifyQCM" class="button qcm-button">Vérifier la réponse</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
